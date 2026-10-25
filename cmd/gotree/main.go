@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/eternalpaininside/gotree.git/internal/output"
+	"github.com/eternalpaininside/gotree.git/internal/stats"
 	"github.com/eternalpaininside/gotree.git/internal/walker"
 	"golang.org/x/term"
 )
@@ -109,10 +110,10 @@ func run() error {
 
 	switch format {
 	case "tree":
-		var result walker.Stats
+		var result stats.Stats
 
 		if showStats {
-			entries = walker.Count(entries, &result)
+			entries = stats.Count(entries, &result)
 		}
 
 		if err := output.Terminal(os.Stdout, entries); err != nil {
@@ -135,10 +136,10 @@ func run() error {
 		return nil
 
 	case "jsonl":
-		var result walker.Stats
+		var result stats.Stats
 
 		if showStats {
-			entries = walker.Count(entries, &result)
+			entries = stats.Count(entries, &result)
 		}
 
 		if err := output.Pipeline(os.Stdout, entries); err != nil {

@@ -1,7 +1,9 @@
-package walker
+package stats
 
 import (
 	"iter"
+
+	"github.com/eternalpaininside/gotree.git/internal/walker"
 )
 
 // Stats содержит статистику видимых объектов.
@@ -27,10 +29,10 @@ func (s Stats) Total() uint64 {
 // Счётчики обновляются при получении каждого
 // элемента потребителем.
 func Count(
-	entries iter.Seq2[Entry, error],
+	entries iter.Seq2[walker.Entry, error],
 	result *Stats,
-) iter.Seq2[Entry, error] {
-	return func(yield func(Entry, error) bool) {
+) iter.Seq2[walker.Entry, error] {
+	return func(yield func(walker.Entry, error) bool) {
 		for entry, err := range entries {
 			if err != nil {
 				yield(entry, err)
@@ -38,13 +40,13 @@ func Count(
 			}
 
 			switch entry.Type {
-			case TypeFile:
+			case walker.TypeFile:
 				result.Files++
 
-			case TypeDir:
+			case walker.TypeDir:
 				result.Directories++
 
-			case TypeSymlink:
+			case walker.TypeSymlink:
 				result.Symlinks++
 
 			default:

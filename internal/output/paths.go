@@ -6,6 +6,7 @@ import (
 	"iter"
 	"path/filepath"
 
+	"github.com/eternalpaininside/gotree.git/internal/stats"
 	"github.com/eternalpaininside/gotree.git/internal/walker"
 )
 
@@ -27,10 +28,10 @@ func Paths(
 		return fmt.Errorf("resolve root: %w", err)
 	}
 
-	var result walker.Stats
+	var result stats.Stats
 
 	if includeStats {
-		entries = walker.Count(entries, &result)
+		entries = stats.Count(entries, &result)
 	}
 
 	for entry, err := range entries {

@@ -6,6 +6,7 @@ import (
 	"io"
 	"iter"
 
+	"github.com/eternalpaininside/gotree.git/internal/stats"
 	"github.com/eternalpaininside/gotree.git/internal/walker"
 )
 
@@ -24,7 +25,7 @@ func JSON(
 		return err
 	}
 
-	var result walker.Stats
+	var result stats.Stats
 	first := true
 
 	for entry, err := range entries {
